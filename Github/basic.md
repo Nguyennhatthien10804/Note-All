@@ -5,4 +5,6 @@
 3. git commit -m "tuy theo tab do lam gi"
 4. git push origin master
     - tuy theo nhanh cua minh
+    update
+
   
