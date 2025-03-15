@@ -6,5 +6,7 @@
 4. git push origin master
     - tuy theo nhanh cua minh
     update
+    supout
+    sudo master
 
   
