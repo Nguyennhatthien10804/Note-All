@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý Quán Nước</title>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        let orders = [];
+        function addOrder() {
+            let drink = document.getElementById('drink').value;
+            let quantity = document.getElementById('quantity').value;
+            if (quantity < 1) {
+                alert("Vui lòng nhập số lượng hợp lệ");
+                return;
+            }
+            let prices = {caphe: 20000, trasua: 30000, nuoccam: 25000, sinhtobo: 35000};
+            let drinkNames = {caphe: "Cà phê", trasua: "Trà sữa", nuoccam: "Nước cam", sinhtobo: "Sinh tố bơ"};
+            let price = prices[drink] * quantity;
+            orders.push({drink: drinkNames[drink], quantity: quantity, price: price});
+            updateOrdersTable();
+        }
+
+        function updateOrdersTable() {
+            let table = document.getElementById('order-list');
+            table.innerHTML = "";
+            let total = 0;
+            orders.forEach((order, index) => {
+                total += order.price;
+                table.innerHTML += `<tr>
+                    <td>${order.drink}</td>
+                    <td>${order.quantity}</td>
+                    <td>${order.price.toLocaleString()}đ</td>
+                    <td><button onclick="removeOrder(${index})">Xóa</button></td>
+                </tr>`;
+            });
+            document.getElementById('total').innerText = `Tổng tiền: ${total.toLocaleString()}đ`;
+        }
+
+        function removeOrder(index) {
+            orders.splice(index, 1);
+            updateOrdersTable();
+        }
+
+        function checkout() {
+            if (orders.length === 0) {
+                alert("Không có đơn hàng nào để thanh toán!");
+                return;
+            }
+            alert("Thanh toán thành công! Tổng tiền: " + document.getElementById('total').innerText);
+            orders = [];
+            updateOrdersTable();
+        }
+    </script>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f8f9fa; margin: 0; padding: 0; text-align: center; }
+        h1 { background-color: #007bff; color: white; padding: 20px; margin: 0; }
+        nav ul { list-style: none; padding: 0; background: #343a40; margin: 0; overflow: hidden; }
+        nav ul li { display: inline; padding: 15px; }
+        nav ul li a { color: white; text-decoration: none; padding: 15px 20px; }
+        nav ul li a:hover { background: #007bff; }
+        .content { padding: 20px; }
+        table { width: 80%; margin: 20px auto; border-collapse: collapse; background: white; }
+        table, th, td { border: 1px solid #dee2e6; }
+        th, td { padding: 10px; text-align: left; }
+        th { background: #007bff; color: white; }
+        form { margin: 20px auto; width: 50%; background: white; padding: 20px; border-radius: 10px; box-shadow: 0px 0px 10px rgba(0,0,0,0.1); }
+        input, select, button { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ced4da; border-radius: 5px; }
+        button { background: #007bff; color: white; border: none; cursor: pointer; }
+        button:hover { background: #0056b3; }
+    </style>
+</head>
+<body>
+    <h1>Quản lý Quán Nước</h1>
+    <nav>
+        <ul>
+            <li><a href="#">Trang Chủ</a></li>
+            <li><a href="#">Quản lý Menu</a></li>
+            <li><a href="#">Quản lý Đơn Hàng</a></li>
+            <li><a href="#">Khách Hàng</a></li>
+        </ul>
+    </nav>
+    <div class="content">
+        <p>Chào mừng bạn đến với quán nước.</p>
+    </div>
+    <h2>Bảng giá Menu</h2>
+    <table>
+        <tr>
+            <th>Đồ uống</th>
+            <th>Giá</th>
+        </tr>
+        <tr><td>Cà phê</td><td>20,000đ</td></tr>
+        <tr><td>Trà sữa</td><td>30,000đ</td></tr>
+        <tr><td>Nước cam</td><td>25,000đ</td></tr>
+        <tr><td>Sinh tố bơ</td><td>35,000đ</td></tr>
+    </table>
+    <h2>Đặt hàng</h2>
+    <form onsubmit="event.preventDefault(); addOrder();">
+        <label for="drink">Chọn đồ uống:</label>
+        <select name="drink" id="drink">
+            <option value="caphe">Cà phê</option>
+            <option value="trasua">Trà sữa</option>
+            <option value="nuoccam">Nước cam</option>
+            <option value="sinhtobo">Sinh tố bơ</option>
+        </select>
+        <label for="quantity">Số lượng:</label>
+        <input type="number" name="quantity" id="quantity" min="1" required>
+        <button type="submit">Đặt hàng</button>
+    </form>
+    <h2>Danh sách đơn hàng</h2>
+    <table>
+        <tr>
+            <th>Đồ uống</th>
+            <th>Số lượng</th>
+            <th>Giá</th>
+            <th>Hành động</th>
+        </tr>
+        <tbody id="order-list"></tbody>
+    </table>
+    <h3 id="total">Tổng tiền: 0đ</h3>
+    <button onclick="checkout()">Thanh toán</button>
+</body>
+</html>
