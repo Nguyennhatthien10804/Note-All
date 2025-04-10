@@ -1,0 +1,12 @@
+buil 
+mvn clean package
+java -jar target/demo-springboot-1.0-SNAPSHOT.jarn
+mvn spring-boot:run
+tao bang
+take me table "stores" vd "address"
+tao tabe voi li quibase
+Help me create stores org.liquibase
+tao api 
+take me API Java spring boot CRUD with stores
+link api
+take me full link api 
